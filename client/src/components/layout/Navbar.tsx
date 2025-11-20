@@ -1,6 +1,6 @@
 import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
-import { Building2, FileText, BarChart3, AlertCircle, Menu, X } from "lucide-react";
+import { Building2, FileText, BarChart3, AlertCircle, Menu, X, User } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -13,7 +13,7 @@ export function Navbar() {
     { href: "/", label: "Home", icon: Building2 },
     { href: "/report-issue", label: "Report Issue", icon: AlertCircle },
     { href: "/schemes", label: "Schemes", icon: FileText },
-    { href: "/dashboard", label: "Progress Dashboard", icon: BarChart3 },
+    { href: "/dashboard", label: "Dashboard", icon: BarChart3 },
   ];
 
   const NavContent = ({ mobile = false }) => (
@@ -37,6 +37,21 @@ export function Navbar() {
           </Link>
         );
       })}
+      
+      {/* Auth Link */}
+      <Link href="/auth">
+        <a 
+          className={cn(
+            mobile ? "w-full" : "ml-4"
+          )}
+          onClick={() => mobile && setIsOpen(false)}
+        >
+          <Button size={mobile ? "lg" : "sm"} className={cn("gap-2", mobile && "w-full")}>
+            <User className="h-4 w-4" />
+            <span>Login</span>
+          </Button>
+        </a>
+      </Link>
     </div>
   );
 
@@ -50,7 +65,7 @@ export function Navbar() {
             </div>
             <div className="flex flex-col">
               <span className="font-serif font-bold text-lg leading-none text-primary">IndiaConnect</span>
-              <span className="text-[10px] text-muted-foreground uppercase tracking-wider">Civic Engagement Platform</span>
+              <span className="text-[10px] text-muted-foreground uppercase tracking-wider">Civic Engagement</span>
             </div>
           </a>
         </Link>
