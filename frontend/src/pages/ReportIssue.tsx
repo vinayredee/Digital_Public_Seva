@@ -726,7 +726,7 @@ ${values.description}
                   loop
                   playsInline
                 >
-                  <source src="/assets/images/report isseue video.mp4" type="video/mp4" />
+                  <source src="/assets/images/issue.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               </div>
