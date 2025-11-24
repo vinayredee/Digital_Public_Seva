@@ -36,8 +36,7 @@ export function useAuth() {
                     id: "demo-user-123",
                     username: credentials.username,
                     password: credentials.password,
-                    role: "USER",
-                    createdAt: new Date().toISOString()
+                    role: "USER"
                 };
                 localStorage.setItem("jansevak_demo_user", JSON.stringify(demoUser));
                 return demoUser;
@@ -95,8 +94,7 @@ export function useAuth() {
                     id: `demo-user-${Math.random().toString(36).substr(2, 9)}`,
                     username: credentials.username,
                     password: credentials.password,
-                    role: "USER",
-                    createdAt: new Date().toISOString()
+                    role: "USER"
                 };
                 localStorage.setItem("jansevak_demo_user", JSON.stringify(demoUser));
                 return demoUser;
