@@ -13,6 +13,16 @@ import { format } from "date-fns";
 export function ComplaintList() {
     const { data: complaints, isLoading } = useQuery<Complaint[]>({
         queryKey: ["/api/complaints"],
+        queryFn: async () => {
+            try {
+                const res = await fetch("/api/complaints");
+                if (res.ok) return await res.json();
+                throw new Error("Failed to fetch from backend");
+            } catch (e) {
+                // Fallback for demo mode
+                return JSON.parse(localStorage.getItem("jansevak_demo_complaints") || "[]");
+            }
+        }
     });
 
     if (isLoading) {

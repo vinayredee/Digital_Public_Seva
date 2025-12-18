@@ -12,8 +12,15 @@ export default function Dashboard() {
   const { data: complaints } = useQuery({
     queryKey: ["/api/complaints"],
     queryFn: async () => {
-      const res = await apiRequest("GET", "/api/complaints");
-      return res.json();
+      try {
+        const res = await fetch("/api/complaints");
+        if (res.ok) return await res.json();
+        throw new Error("Failed to fetch from backend");
+      } catch (e) {
+        // Fallback for demo mode
+        console.log("Using demo mode complaints");
+        return JSON.parse(localStorage.getItem("jansevak_demo_complaints") || "[]");
+      }
     },
   });
 
