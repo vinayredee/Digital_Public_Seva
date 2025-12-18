@@ -33,12 +33,33 @@ export default function AdminDashboard() {
 
     const { data: complaints, isLoading } = useQuery<Complaint[]>({
         queryKey: ["/api/complaints/all"],
+        queryFn: async () => {
+            try {
+                const res = await fetch("/api/complaints/all");
+                if (res.ok) return await res.json();
+                throw new Error("Failed to fetch from backend");
+            } catch (e) {
+                // Fallback for demo mode
+                return JSON.parse(localStorage.getItem("jansevak_demo_complaints") || "[]");
+            }
+        }
     });
 
     const statusMutation = useMutation({
         mutationFn: async ({ id, status }: { id: string; status: string }) => {
-            const res = await apiRequest("PATCH", `/api/complaints/${id}/status`, { status });
-            return res.json();
+            try {
+                const res = await apiRequest("PATCH", `/api/complaints/${id}/status`, { status });
+                return await res.json();
+            } catch (e) {
+                // Fallback for demo mode
+                console.log("Demo mode: Updating status locally");
+                const existingComplaints = JSON.parse(localStorage.getItem("jansevak_demo_complaints") || "[]");
+                const updatedComplaints = existingComplaints.map((c: any) =>
+                    c.id === id ? { ...c, status } : c
+                );
+                localStorage.setItem("jansevak_demo_complaints", JSON.stringify(updatedComplaints));
+                return { success: true };
+            }
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["/api/complaints/all"] });

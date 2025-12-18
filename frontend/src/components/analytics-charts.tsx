@@ -22,8 +22,25 @@ export default function AnalyticsCharts() {
     const { data: stats, isLoading } = useQuery({
         queryKey: ["/api/complaints/stats"],
         queryFn: async () => {
-            const res = await apiRequest("GET", "/api/complaints/stats");
-            return res.json();
+            try {
+                const res = await apiRequest("GET", "/api/complaints/stats");
+                return await res.json();
+            } catch (e) {
+                // Fallback for demo mode - calculate stats from localStorage
+                console.log("Demo mode: Calculating stats locally");
+                const complaints = JSON.parse(localStorage.getItem("jansevak_demo_complaints") || "[]");
+                const localStats: Record<string, number> = {
+                    PENDING: 0,
+                    IN_PROGRESS: 0,
+                    RESOLVED: 0
+                };
+                complaints.forEach((c: any) => {
+                    if (localStats[c.status] !== undefined) {
+                        localStats[c.status]++;
+                    }
+                });
+                return localStats;
+            }
         },
     });
 
