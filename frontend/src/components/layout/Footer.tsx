@@ -6,11 +6,11 @@ export default function Footer() {
                     <p className="text-sm text-gray-600 dark:text-gray-400">
                         Developed by{" "}
                         <span className="font-semibold text-[#000080] dark:text-orange-400">
-                            Kundu Vinay Kumar Reddy
+                            Kundu Vennela Reddy & Kundu Vinay Kumar Reddy
                         </span>
                     </p>
                     <p className="text-xs text-gray-500 dark:text-gray-500">
-                        B.Tech CSE Graduate
+                        EEE Undergrad | B.Tech CSE Graduate
                     </p>
                     <p className="text-xs text-gray-400 dark:text-gray-600">
                         Digital Public Seva Portal © {new Date().getFullYear()}
